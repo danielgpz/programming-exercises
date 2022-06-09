@@ -13,26 +13,8 @@ namespace Zip
             IEnumerator<T> enumr1 = enum1.GetEnumerator();
             IEnumerator<T> enumr2 = enum2.GetEnumerator();
 
-            while (true)
-            {
-                bool returned = false;
-                if (enumr1.MoveNext()) 
-                {
-                    yield return enumr1.Current;
-                    returned = true;
-                }
-
-                if (enumr2.MoveNext())
-                {
-                    yield return enumr2.Current;
-                    returned = true;
-                }
-
-                if (!returned)
-                {
-                    break;
-                }
-            }
+            // Borra la linea debajo y escribe tu código
+            throw new NotImplementedException();
         }
     }
 }

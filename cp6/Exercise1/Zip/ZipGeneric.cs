@@ -5,39 +5,44 @@ namespace Zip
 {
     public class Zip<T>: IEnumerable<T> 
     {
+        IEnumerable<T> Enum1;
+        IEnumerable<T> Enum2;
+        
+        public Zip(IEnumerable<T> enum1, IEnumerable<T> enum2) 
+        {
+            Enum1 = enum1;
+            Enum2 = enum2;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<T> GetEnumerator() 
+        {
+            // Se retorna una instancia de la clase que
+            // tienen que implementar (_Zip)
+            return new _Zip(Enum1.GetEnumerator(), Enum2.GetEnumerator());
+        }
+
+        // Clase donde tienen que implementar los métodos
         class _Zip : IEnumerator<T>
         {
-            bool first;
+            // Recomendación: bool first;
             IEnumerator<T> Enum1;
             IEnumerator<T> Enum2;
             public _Zip(IEnumerator<T> enum1, IEnumerator<T> enum2)
             {
                 Enum1 = enum1;
                 Enum2 = enum2;
-                first = true;
+                // Recomendación: first = true;
             }
 
             public bool MoveNext()
             {
-                if (first && Enum1.MoveNext()) 
-                {
-                    first = false;
-                    return true;
-                }
-
-                if (Enum2.MoveNext()) 
-                {
-                    first = true;
-                    return true;
-                }
-
-                if (Enum1.MoveNext())
-                {
-                    first = false;
-                    return true;
-                }
-
-                return false;
+                // Borra la linea debajo y escribe tu código
+                throw new NotImplementedException();
             }
 
             object IEnumerator.Current
@@ -52,12 +57,8 @@ namespace Zip
             {
                 get
                 {
-                    if (first)
-                    {
-                        return Enum2.Current;
-                    }
-
-                    return Enum1.Current;
+                    // Borra la linea debajo y escribe tu código
+                    throw new NotImplementedException();
                 }
             }
 
@@ -65,7 +66,7 @@ namespace Zip
             {
                 Enum1.Reset();
                 Enum2.Reset();
-                first = true;
+                // Recomendación: first = true;
             }
 
             public void Dispose()
@@ -73,26 +74,6 @@ namespace Zip
                 Enum1.Dispose();
                 Enum2.Dispose();
             }
-        }
-
-
-        IEnumerable<T> Enum1;
-        IEnumerable<T> Enum2;
-        
-        public Zip(IEnumerable<T> enum1, IEnumerable<T> enum2) 
-        {
-            Enum1 = enum1;
-            Enum2 = enum2;
-        }
-
-        public IEnumerator<T> GetEnumerator() 
-        {
-            return new _Zip(Enum1.GetEnumerator(), Enum2.GetEnumerator());
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }
